@@ -1,26 +1,130 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import logo from "./logo.svg";
+import "./App.css";
+import {
+    Box,
+    Button,
+    Checkbox,
+    FormControlLabel,
+    FormGroup,
+    Paper,
+    Stack,
+    TextField,
+} from "@mui/material";
 
+const question = [
+    {
+        type: "ox",
+        q: "문제1",
+        a: true,
+    },
+    {
+        type: "choice",
+        q: "문제2",
+        list: ["선택지1", "선택지2", "선택지3", "선택지4", "선택지5"],
+        a: 1,
+    },
+    {
+        type: "ox",
+        q: "문제3",
+        a: false,
+    },
+    {
+        type: "ox",
+        q: "문제4",
+        a: true,
+    },
+    {
+        type: "choice",
+        q: "문제5",
+        list: ["선택지1", "선택지2", "선택지3", "선택지4", "선택지5"],
+        a: 3,
+    },
+];
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const [showQuestion, setShowQuestion] = useState(false);
+
+    return (
+        <Box sx={{ p: 5 }}>
+            <Stack spacing={4}>
+                <Stack
+                    alignItems="center"
+                    flexDirection="row"
+                    justifyContent={"center"}
+                >
+                    <TextField
+                        id="outlined-basic"
+                        label="학생ID"
+                        variant="outlined"
+                        sx={{ width: 300, mr: 1 }}
+                    />
+                    <Button
+                        variant="contained"
+                        size="large"
+                        onClick={() => setShowQuestion(true)}
+                    >
+                        검색
+                    </Button>
+                </Stack>
+                {showQuestion && (
+                    <Stack>
+                        <Paper sx={{ p: 5 }} elevation={3}>
+                            <Stack spacing={3}>
+                                {question.map((v, i) => (
+                                    <Stack key={i}>
+                                        <Stack>
+                                            {i + 1}. {v.q}
+                                        </Stack>
+                                        <Stack pl={5}>
+                                            {v.type === "ox" ? (
+                                                <FormGroup>
+                                                    <Stack flexDirection="row">
+                                                        <FormControlLabel
+                                                            control={
+                                                                <Checkbox />
+                                                            }
+                                                            label="O"
+                                                        />
+                                                        <FormControlLabel
+                                                            control={
+                                                                <Checkbox />
+                                                            }
+                                                            label="X"
+                                                        />
+                                                    </Stack>
+                                                </FormGroup>
+                                            ) : (
+                                                <FormGroup>
+                                                    <Stack>
+                                                        {v?.list?.map(
+                                                            (
+                                                                item,
+                                                                itemIdex
+                                                            ) => (
+                                                                <FormControlLabel
+                                                                    key={
+                                                                        itemIdex
+                                                                    }
+                                                                    control={
+                                                                        <Checkbox />
+                                                                    }
+                                                                    label={item}
+                                                                />
+                                                            )
+                                                        )}
+                                                    </Stack>
+                                                </FormGroup>
+                                            )}
+                                        </Stack>
+                                    </Stack>
+                                ))}
+                            </Stack>
+                        </Paper>
+                    </Stack>
+                )}
+            </Stack>
+        </Box>
+    );
 }
 
 export default App;
