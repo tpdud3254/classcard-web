@@ -1,8 +1,11 @@
-import Admin from "./pages/Admin";
-import Users from "./pages/Users";
+import { Outlet } from "react-router-dom";
 
 function App() {
-    return <>{true ? <Admin /> : <Users />}</>;
+    return (
+        <div>
+            <Outlet />
+        </div>
+    );
 }
 
 export default App;
